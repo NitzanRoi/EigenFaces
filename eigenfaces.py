@@ -1,5 +1,3 @@
-# the code
-
 import os
 import numpy as np
 from matplotlib import pyplot as plt
@@ -116,7 +114,7 @@ class PCA:
 
 class RecognizeFaces:
     # class for the face recognition final result
-    def __init__(self, K_biggest, eig_vectors_biggest, img_arr, dataset_path="./LAG_faces"):
+    def __init__(self, K_biggest, eig_vectors_biggest, img_arr, dataset_path):
         self.bo_obj = BasicOperations()
         self.K_biggest = K_biggest
         self.eig_vectors_biggest = eig_vectors_biggest
