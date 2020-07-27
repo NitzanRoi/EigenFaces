@@ -55,11 +55,7 @@ class LoadData:
         # check that all the images are in the same size
         img_shape = (0, 0)
         img_arr = []
-        i=0
         for filename in os.listdir(self.dataset_path):
-            if i==5000:
-                break
-            i+=1
             if (not filename.endswith(".txt")):
                 img = self.bo_obj.read_image(os.path.join(self.dataset_path, filename))
                 if (type(img) == bool): # reading-image function was crashed
@@ -108,7 +104,7 @@ class PCA:
     def get_K_biggest_eigenvectors(self, img_arr, eig_vectors, eig_values):
         # finding the K biggest eigenvectors (according to their corresponding eigenvalues)
         eig_vectors_sorted = np.take(eig_vectors, np.argsort(eig_values), axis=1)
-        K_biggest = int(0.05*eig_vectors_sorted.shape[1])
+        K_biggest = int(0.1*eig_vectors_sorted.shape[1])
         eig_vectors_biggest = eig_vectors_sorted[:, (eig_vectors_sorted.shape[1] - K_biggest):]
         eig_vectors_biggest = np.dot(img_arr, eig_vectors_biggest)
         return K_biggest, eig_vectors_biggest 
