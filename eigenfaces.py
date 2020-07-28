@@ -54,7 +54,7 @@ class LoadData:
         img_shape = (0, 0)
         img_arr = []
         for filename in os.listdir(self.dataset_path):
-            if (not filename.endswith(".txt")):
+            if (os.path.isfile(os.path.join(self.dataset_path, filename)) and filename.endswith(".png")):
                 img = self.bo_obj.read_image(os.path.join(self.dataset_path, filename))
                 if (type(img) == bool): # reading-image function was crashed
                     continue
@@ -133,7 +133,7 @@ class RecognizeFaces:
             img_test = imgs_names[rand_idx]
         img = self.bo_obj.read_image(os.path.join(self.dataset_path, img_test))
         img = self.bo_obj.convert_img_colors("GS", img)
-        print("input image - randomly:")
+        print("input image - randomly from test:")
         self.bo_obj.show_img(img, True)
         img = img.flatten()
         img = img.reshape((img.shape[0], 1))
@@ -156,7 +156,7 @@ class RecognizeFaces:
         img_dim = int(np.sqrt(original_img.shape[0]))
         mean_img = mean_img.reshape((img_dim, img_dim)) 
         final_img = original_img.reshape((img_dim, img_dim)) + mean_img
-        print("image found in the dataset:")
+        print("image found in the train dataset:")
         self.bo_obj.show_img(final_img, True)
 
 
@@ -198,6 +198,8 @@ def main():
     if (type(img_arr) == bool): # when img_arr = False
         return False
     K_biggest, eig_vectors_biggest = tp.test_pca(img_arr)
+    test_dir = "/test_faces"
+    dataset_path += test_dir
     tp.test_recognition(K_biggest, eig_vectors_biggest, img_arr, dataset_path)
     
 
